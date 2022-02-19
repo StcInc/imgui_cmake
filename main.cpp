@@ -103,9 +103,6 @@ int main(int, char**)
     //ImFont* font = io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\ArialUni.ttf", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
     //IM_ASSERT(font != NULL);
 
-    io.Fonts->AddFontFromFileTTF("/Library/Fonts/SF-Mono-Regular.otf", 15.f);
-
-
     // Our state
     bool show_demo_window = true;
     bool show_another_window = false;
