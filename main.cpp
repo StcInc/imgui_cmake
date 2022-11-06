@@ -8,6 +8,8 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include <stdio.h>
+#include <cstring>
+#include <iostream>
 #if defined(IMGUI_IMPL_OPENGL_ES2)
 #include <GLES2/gl2.h>
 #endif
@@ -48,6 +50,152 @@ void read_from_file(const char * const path, ImVector<char>& dst) {
     }
 }
 
+void ModernDarkTheme()
+{
+    auto& style = ImGui::GetStyle();
+    style.ChildRounding = 0;
+    style.GrabRounding = 0;
+    style.FrameRounding = 2;
+    style.PopupRounding = 0;
+    style.ScrollbarRounding = 0;
+    style.TabRounding = 2;
+    style.WindowRounding = 0;
+    style.FramePadding = { 4, 4 };
+
+    style.WindowTitleAlign = { 0.0, 0.5 };
+    style.ColorButtonPosition = ImGuiDir_Left;
+
+    ImVec4* colors = ImGui::GetStyle().Colors;
+    colors[ImGuiCol_Text] = { 1.0f, 1.0f, 1.0f, 1.00f };                //
+    colors[ImGuiCol_TextDisabled] = { 0.25f, 0.25f, 0.25f, 1.00f };     //
+    colors[ImGuiCol_WindowBg] = { 0.09f, 0.09f, 0.09f, 0.94f };         //
+    colors[ImGuiCol_ChildBg] = { 0.11f, 0.11f, 0.11f, 1.00f };          //
+    colors[ImGuiCol_PopupBg] = { 0.11f, 0.11f, 0.11f, 0.94f };          //
+    colors[ImGuiCol_Border] = { 0.07f, 0.08f, 0.08f, 1.00f };
+    colors[ImGuiCol_BorderShadow] = { 0.00f, 0.00f, 0.00f, 0.00f };
+    colors[ImGuiCol_FrameBg] = { 0.35f, 0.35f, 0.35f, 0.54f };          //
+    colors[ImGuiCol_FrameBgHovered] = { 0.31f, 0.29f, 0.27f, 1.00f };   
+    colors[ImGuiCol_FrameBgActive] = { 0.40f, 0.36f, 0.33f, 0.67f };
+    colors[ImGuiCol_TitleBg] = { 0.1f, 0.1f, 0.1f, 1.00f };             
+    colors[ImGuiCol_TitleBgActive] = { 0.3f, 0.3f, 0.3f, 1.00f };       //
+    colors[ImGuiCol_TitleBgCollapsed] = { 0.0f, 0.0f, 0.0f, 0.61f };    
+    colors[ImGuiCol_MenuBarBg] = { 0.18f, 0.18f, 0.18f, 0.94f };        //
+    colors[ImGuiCol_ScrollbarBg] = { 0.00f, 0.00f, 0.00f, 0.16f };
+    colors[ImGuiCol_ScrollbarGrab] = { 0.24f, 0.22f, 0.21f, 1.00f };
+    colors[ImGuiCol_ScrollbarGrabHovered] = { 0.31f, 0.29f, 0.27f, 1.00f };
+    colors[ImGuiCol_ScrollbarGrabActive] = { 0.40f, 0.36f, 0.33f, 1.00f };
+    colors[ImGuiCol_CheckMark] = { 0.84f, 0.84f, 0.84f, 1.0f };         //
+    colors[ImGuiCol_SliderGrab] = { 0.8f, 0.8f, 0.8f, 1.0f };           //      
+    colors[ImGuiCol_SliderGrabActive] = { 0.55f, 0.55f, 0.55f, 1.00f }; //
+    colors[ImGuiCol_Button] = { 0.55f, 0.55f, 0.55f, 0.40f };           //
+    colors[ImGuiCol_ButtonHovered] = { 0.15f, 0.15f, 0.15f, 0.62f };    //  
+    colors[ImGuiCol_ButtonActive] = { 0.60f, 0.60f, 0.60f, 1.00f };     //
+    colors[ImGuiCol_Header] = { 0.84f, 0.36f, 0.05f, 0.0f };            //
+    colors[ImGuiCol_HeaderHovered] = { 0.25f, 0.25f, 0.25f, 0.80f };    //
+    colors[ImGuiCol_HeaderActive] = { 0.42f, 0.42f, 0.42f, 1.00f }; 
+    colors[ImGuiCol_Separator] = { 0.35f, 0.35f, 0.35f, 0.50f };        //
+    colors[ImGuiCol_SeparatorHovered] = { 0.31f, 0.29f, 0.27f, 0.78f };
+    colors[ImGuiCol_SeparatorActive] = { 0.40f, 0.36f, 0.33f, 1.00f };
+    colors[ImGuiCol_ResizeGrip] = { 1.0f, 1.0f, 1.0f, 0.25f };          //
+    colors[ImGuiCol_ResizeGripHovered] = { 1.00f, 1.0f, 1.0f, 0.4f };   //
+    colors[ImGuiCol_ResizeGripActive] = { 1.00f, 1.00f, 1.0f, 0.95f };  //
+    colors[ImGuiCol_Tab] = { 0.18f, 0.18f, 0.18f, 1.0f };               //
+    colors[ImGuiCol_TabHovered] = { 0.58f, 0.58f, 0.58f, 0.80f };       //
+    colors[ImGuiCol_TabActive] = { 0.6f, 0.60f, 0.60f, 1.00f }; 
+    colors[ImGuiCol_TabUnfocused] = { 0.07f, 0.10f, 0.15f, 0.97f };
+    colors[ImGuiCol_TabUnfocusedActive] = { 0.14f, 0.26f, 0.42f, 1.00f };
+    colors[ImGuiCol_PlotLines] = { 0.66f, 0.60f, 0.52f, 1.00f };
+    colors[ImGuiCol_PlotLinesHovered] = { 0.98f, 0.29f, 0.20f, 1.00f };
+    colors[ImGuiCol_PlotHistogram] = { 0.60f, 0.59f, 0.10f, 1.00f };
+    colors[ImGuiCol_PlotHistogramHovered] = { 0.72f, 0.73f, 0.15f, 1.00f };
+    colors[ImGuiCol_TextSelectedBg] = { 0.27f, 0.52f, 0.53f, 0.35f };
+    colors[ImGuiCol_DragDropTarget] = { 0.60f, 0.59f, 0.10f, 0.90f };
+    colors[ImGuiCol_NavHighlight] = { 0.51f, 0.65f, 0.60f, 1.00f };
+    colors[ImGuiCol_NavWindowingHighlight] = { 1.00f, 1.00f, 1.00f, 0.70f };
+    colors[ImGuiCol_NavWindowingDimBg] = { 0.80f, 0.80f, 0.80f, 0.20f };
+    colors[ImGuiCol_ModalWindowDimBg] = { 0.11f, 0.13f, 0.13f, 0.35f };
+}
+
+
+class TextEditor {
+
+public: 
+
+    TextEditor(bool* showEditor, bool* focusOnFileInput) {
+        ImGui::Begin("Editor", showEditor);
+
+        // Note that because we need to store a terminating zero character, our size/capacity are 1 more
+        // than usually reported by a typical string class.
+        static ImVector<char> fileContents;
+        if (fileContents.empty()){
+            fileContents.push_back(0);
+
+        }
+
+        char* defaultFile = "todo.txt";
+
+        static ImVector<char> filePath;
+        filePath.resize(strlen(defaultFile) + 1);
+        memcpy(filePath.Data, defaultFile, strlen(defaultFile) + 1);
+
+        
+        if (*focusOnFileInput) {
+            ImGui::SetKeyboardFocusHere();
+            *focusOnFileInput = false;
+        }
+        ImGui::InputText(
+            "File path",
+            filePath.begin(),
+            (size_t)filePath.size(),
+            ImGuiInputTextFlags_CallbackResize,
+            onResizeCallback,
+            (void*)&filePath
+        );
+
+
+        if (ImGui::Button("Save")) { // TODO: check if fielContents is not empty and filePath is not empty
+            std::cout << "Saving to file " << filePath.begin() << std::endl;
+            save_to_file(fileContents, filePath.begin());
+        }
+
+        ImGui::SameLine(); 
+        if (ImGui::Button("Load")) {
+            std::cout << "Loading from fille " << filePath.begin() << std::endl;
+            read_from_file(filePath.begin(), fileContents);
+            ImGui::SetKeyboardFocusHere();
+        }
+
+        //if (!focusOnFileInput) ImGui::SetKeyboardFocusHere();
+        ImGui::InputTextMultiline(
+            "FileContents",
+            fileContents.begin(),
+            (size_t)fileContents.size(),
+            ImVec2(-FLT_MIN, -FLT_MIN),
+            ImGuiInputTextFlags_CallbackResize,
+            onResizeCallback,
+            (void*)&fileContents
+        );
+
+
+        //ImGui::Text("Data: %p\nSize: %d\nCapacity: %d", (void*)my_str.begin(), my_str.size(), my_str.capacity());
+        ImGui::End();
+    }
+    
+
+private:
+    static int onResizeCallback(ImGuiInputTextCallbackData* data) {
+        if (data->EventFlag == ImGuiInputTextFlags_CallbackResize) {
+            ImVector<char>* my_str = (ImVector<char>*)data->UserData;
+            IM_ASSERT(my_str->begin() == data->Buf);
+            my_str->resize(data->BufSize); // NB: On resizing calls, generally data->BufSize == data->BufTextLen + 1
+            data->Buf = my_str->begin();
+        }
+        return 0;
+    }
+
+};
+
+
 
 int main(int, char**)
 {
@@ -79,10 +227,17 @@ int main(int, char**)
     //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // 3.0+ only
 #endif
 
+    glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
+
+
     // Create window with graphics context
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "Dear ImGui GLFW+OpenGL3 example", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(1280, 720, "Dear ImGui text editor", NULL, NULL);
     if (window == NULL)
         return 1;
+
+    glfwSetWindowAttrib(window, GLFW_DECORATED, GLFW_FALSE);
+
+
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1); // Enable vsync
 
@@ -90,6 +245,8 @@ int main(int, char**)
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
+    io.FontGlobalScale = 1.8;
+
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
     //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
@@ -108,6 +265,8 @@ int main(int, char**)
         style.WindowRounding = 0.0f;
         style.Colors[ImGuiCol_WindowBg].w = 1.0f;
     }
+
+    ModernDarkTheme();
 
     // Setup Platform/Renderer backends
     ImGui_ImplGlfw_InitForOpenGL(window, true);
@@ -129,12 +288,14 @@ int main(int, char**)
     //IM_ASSERT(font != NULL);
 
     // Our state
-    bool show_demo_window = true;
-    bool show_another_window = false;
-    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+    ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 0.00f);
+
+    bool show_demo_window = false;
+    bool showEditor = true;
+    bool focusOnFileInput = true;
 
     // Main loop
-    while (!glfwWindowShouldClose(window))
+    while (!glfwWindowShouldClose(window) && showEditor)
     {
         // Poll and handle events (inputs, window resize, etc.)
         // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
@@ -148,72 +309,11 @@ int main(int, char**)
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        {
-            ImGui::Begin("Editor");
-            struct Funcs
-            {
-                static int MyResizeCallback(ImGuiInputTextCallbackData* data)
-                {
-                    if (data->EventFlag == ImGuiInputTextFlags_CallbackResize)
-                    {
-                        ImVector<char>* my_str = (ImVector<char>*)data->UserData;
-                        IM_ASSERT(my_str->begin() == data->Buf);
-                        my_str->resize(data->BufSize); // NB: On resizing calls, generally data->BufSize == data->BufTextLen + 1
-                        data->Buf = my_str->begin();
-                    }
-                    return 0;
-                }
-
-                // Note: Because ImGui:: is a namespace you would typically add your own function into the namespace.
-                // For example, you code may declare a function 'ImGui::InputText(const char* label, MyString* my_str)'
-                static bool MyInputTextMultiline(const char* label, ImVector<char>* my_str, const ImVec2& size = ImVec2(0, 0), ImGuiInputTextFlags flags = 0)
-                {
-                    IM_ASSERT((flags & ImGuiInputTextFlags_CallbackResize) == 0);
-                    return ImGui::InputTextMultiline(label, my_str->begin(), (size_t)my_str->size(), size, flags | ImGuiInputTextFlags_CallbackResize, Funcs::MyResizeCallback, (void*)my_str);
-                }
-
-                static bool SingleLineTextInput(const char* label, ImVector<char>* my_str, ImGuiInputTextFlags flags = 0) {
-                    IM_ASSERT((flags & ImGuiInputTextFlags_CallbackResize) == 0);
-                    return ImGui::InputText(label, my_str->begin(), (size_t)my_str->size(), flags | ImGuiInputTextFlags_CallbackResize, Funcs::MyResizeCallback, (void*)my_str);
-                }
-            };
-
-            // For this demo we are using ImVector as a string container.
-            // Note that because we need to store a terminating zero character, our size/capacity are 1 more
-            // than usually reported by a typical string class.
-            static ImVector<char> my_str;
-            if (my_str.empty()){
-                my_str.push_back(0);
-
-            }
-
-            static ImVector<char> save_path;
-            if (save_path.empty()){
-                save_path.push_back(0);
-
-            }
-
-            Funcs::SingleLineTextInput("File path", &save_path);
-            // = "./out.txt";
-
-            if (ImGui::Button("Save")) {
-                save_to_file(my_str, save_path.begin());
-            }
-
-            ImGui::SameLine(); 
-            if (ImGui::Button("Load")) {
-                read_from_file(save_path.begin(), my_str);
-            }
-
-            Funcs::MyInputTextMultiline("##MyStr", &my_str, ImVec2(-FLT_MIN, ImGui::GetTextLineHeight() * 16));
-            ImGui::Text("Data: %p\nSize: %d\nCapacity: %d", (void*)my_str.begin(), my_str.size(), my_str.capacity());
-            ImGui::End();
-        }
-
-        
+        TextEditor textEditor(&showEditor, &focusOnFileInput);
+ 
         // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-        //if (show_demo_window)
-        //    ImGui::ShowDemoWindow(&show_demo_window);
+        if (show_demo_window)
+            ImGui::ShowDemoWindow(&show_demo_window);
         
         // Rendering
         ImGui::Render();
