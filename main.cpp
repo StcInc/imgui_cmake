@@ -118,64 +118,61 @@ void ModernDarkTheme()
 
 
 class TextEditor {
-
 public: 
+    bool show = true;
+    ImVector<char> fileContents;
+    ImVector<char> filePath;
 
-    TextEditor(bool* showEditor, bool* focusOnFileInput) {
-        ImGui::Begin("Editor", showEditor);
 
+    TextEditor() {
         // Note that because we need to store a terminating zero character, our size/capacity are 1 more
         // than usually reported by a typical string class.
-        static ImVector<char> fileContents;
         if (fileContents.empty()){
             fileContents.push_back(0);
-
         }
 
-        char* defaultFile = "todo.txt";
+        char* defaultFile = (char*)"todo.txt";
 
-        static ImVector<char> filePath;
         filePath.resize(strlen(defaultFile) + 1);
         memcpy(filePath.Data, defaultFile, strlen(defaultFile) + 1);
 
+    }
+
+    void render() {
+        ImGui::Begin("Editor", &(this->show));
         
-        if (*focusOnFileInput) {
-            ImGui::SetKeyboardFocusHere();
-            *focusOnFileInput = false;
-        }
         ImGui::InputText(
             "File path",
-            filePath.begin(),
-            (size_t)filePath.size(),
+            this->filePath.begin(),
+            (size_t)(this->filePath.size()),
             ImGuiInputTextFlags_CallbackResize,
-            onResizeCallback,
-            (void*)&filePath
+            this->onResizeCallback,
+            (void*)&(this->filePath)
         );
 
 
-        if (ImGui::Button("Save")) { // TODO: check if fielContents is not empty and filePath is not empty
+        if (ImGui::Button("Save")) { 
+            // TODO: check if fielContents is not empty and filePath is not empty
             std::cout << "Saving to file " << filePath.begin() << std::endl;
-            save_to_file(fileContents, filePath.begin());
+            save_to_file(this->fileContents, filePath.begin());
         }
 
         ImGui::SameLine(); 
         if (ImGui::Button("Load")) {
             std::cout << "Loading from fille " << filePath.begin() << std::endl;
             read_from_file(filePath.begin(), fileContents);
-            ImGui::SetKeyboardFocusHere();
+            //ImGui::SetKeyboardFocusHere();
         }
 
-        //if (!focusOnFileInput) ImGui::SetKeyboardFocusHere();
         ImGui::InputTextMultiline(
             "FileContents",
-            fileContents.begin(),
-            (size_t)fileContents.size(),
+            this->fileContents.begin(),
+            (size_t)(this->fileContents.size()),
             ImVec2(-FLT_MIN, -FLT_MIN),
             ImGuiInputTextFlags_CallbackResize,
-            onResizeCallback,
-            (void*)&fileContents
+            this->onResizeCallback,
+            (void*)&(this->fileContents)
         );
-
 
         //ImGui::Text("Data: %p\nSize: %d\nCapacity: %d", (void*)my_str.begin(), my_str.size(), my_str.capacity());
         ImGui::End();
@@ -186,6 +183,7 @@ private:
     static int onResizeCallback(ImGuiInputTextCallbackData* data) {
         if (data->EventFlag == ImGuiInputTextFlags_CallbackResize) {
             ImVector<char>* my_str = (ImVector<char>*)data->UserData;
+
             IM_ASSERT(my_str->begin() == data->Buf);
             my_str->resize(data->BufSize); // NB: On resizing calls, generally data->BufSize == data->BufTextLen + 1
             data->Buf = my_str->begin();
@@ -290,12 +288,13 @@ int main(int, char**)
     // Our state
     ImVec4 clear_color = ImVec4(0.0f, 0.0f, 0.0f, 0.00f);
 
+
+    TextEditor textEditor;
+
     bool show_demo_window = false;
-    bool showEditor = true;
-    bool focusOnFileInput = true;
 
     // Main loop
-    while (!glfwWindowShouldClose(window) && showEditor)
+    while (!glfwWindowShouldClose(window) && textEditor.show)
     {
         // Poll and handle events (inputs, window resize, etc.)
         // You can read the io.WantCaptureMouse, io.WantCaptureKeyboard flags to tell if dear imgui wants to use your inputs.
@@ -309,11 +308,13 @@ int main(int, char**)
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        TextEditor textEditor(&showEditor, &focusOnFileInput);
+        textEditor.render();
+
  
         // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-        if (show_demo_window)
+        if (show_demo_window) {
             ImGui::ShowDemoWindow(&show_demo_window);
+        }
         
         // Rendering
         ImGui::Render();
