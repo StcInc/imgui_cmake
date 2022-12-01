@@ -140,10 +140,21 @@ public:
         );
 
 
-        if (ImGui::Button("Save")) { 
-            // TODO: check if fielContents is not empty and filePath is not empty
-            std::cout << "Saving to file " << this->filePath.begin() << std::endl;
-            save_to_file(this->fileContents, this->filePath.begin());
+        if (ImGui::Button("Save")) {
+            std::cout << "filePath.size: " << this->filePath.size() << " fileContents.size: " << this->fileContents.size() << std::endl;
+ 
+            if ((this->filePath.size()) > 1 && (this->fileContents.size() > 1)) {
+                std::cout << "Saving to file " << this->filePath.begin() << std::endl;
+                save_to_file(this->fileContents, this->filePath.begin());
+            }
+            else {
+                if (this->filePath.size() <= 1) {
+                    std::cout << "Filepath is empty!" << std::endl;
+                }
+                if (this->fileContents.size() <= 1) {
+                    std::cout << "File contents is empty!" << std::endl;
+                }
+            }
         }
 
         ImGui::SameLine(); 
@@ -173,9 +184,9 @@ private:
     static int onResizeCallback(ImGuiInputTextCallbackData* data) {
         if (data->EventFlag == ImGuiInputTextFlags_CallbackResize) {
             ImVector<char>* my_str = (ImVector<char>*)data->UserData;
-
             IM_ASSERT(my_str->begin() == data->Buf);
-            my_str->resize(data->BufSize); // NB: On resizing calls, generally data->BufSize == data->BufTextLen + 1
+
+            my_str->resize(data->BufTextLen + 1); // NB: On resizing calls, generally data->BufSize == data->BufTextLen + 1
             data->Buf = my_str->begin();
         }
         return 0;
