@@ -1,4 +1,4 @@
-# Building imgui/glfw app using cmake
+# Building imgui/glfw app using cmake / IMGui Text Editor
 [Dear ImGui lib](https://github.com/ocornut/imgui)
 [GLFW lib](https://github.com/glfw/glfw)
 
@@ -12,7 +12,7 @@
 bash build.sh
 ```
 
-## Runinng example app:
+## Runinng TextEditor app:
 ```
 bash run.sh
 ```

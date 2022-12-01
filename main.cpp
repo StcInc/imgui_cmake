@@ -1,8 +1,3 @@
-// Dear ImGui: standalone example application for GLFW + OpenGL 3, using programmable pipeline
-// (GLFW is a cross-platform general purpose library for handling windows, inputs, OpenGL/Vulkan/Metal graphics context creation, etc.)
-// If you are new to Dear ImGui, read documentation from the docs/ folder + read the top of imgui.cpp.
-// Read online: https://github.com/ocornut/imgui/tree/master/docs
-
 #include <cstdio>
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -14,13 +9,6 @@
 #include <GLES2/gl2.h>
 #endif
 #include <GLFW/glfw3.h> // Will drag system OpenGL headers
-
-// [Win32] Our example includes a copy of glfw3.lib pre-compiled with VS2010 to maximize ease of testing and compatibility with old VS compilers.
-// To link with VS2010-era libraries, VS2015+ requires linking with legacy_stdio_definitions.lib, which we do using this pragma.
-// Your own project should not be affected, as you are likely to link with a newer binary of GLFW that is adequate for your version of Visual Studio.
-#if defined(_MSC_VER) && (_MSC_VER >= 1900) && !defined(IMGUI_DISABLE_WIN32_FUNCTIONS)
-#pragma comment(lib, "legacy_stdio_definitions")
-#endif
 
 static void glfw_error_callback(int error, const char* description)
 {
@@ -41,6 +29,7 @@ void read_from_file(const char * const path, ImVector<char>& dst) {
         long fsize = ftell(f);
         fseek(f, 0, SEEK_SET);  /* same as rewind(f); */
 
+        std::cout << "Loading file size: " << fsize << std::endl;
 
         dst.resize(fsize + 1);
         fread(dst.Data, fsize, 1, f);
@@ -153,14 +142,15 @@ public:
 
         if (ImGui::Button("Save")) { 
             // TODO: check if fielContents is not empty and filePath is not empty
-            std::cout << "Saving to file " << filePath.begin() << std::endl;
-            save_to_file(this->fileContents, filePath.begin());
+            std::cout << "Saving to file " << this->filePath.begin() << std::endl;
+            save_to_file(this->fileContents, this->filePath.begin());
         }
 
         ImGui::SameLine(); 
         if (ImGui::Button("Load")) {
-            std::cout << "Loading from fille " << filePath.begin() << std::endl;
-            read_from_file(filePath.begin(), fileContents);
+            std::cout << "Loading from fille " << this->filePath.begin() << std::endl;
+            this->fileContents.clear();
+            read_from_file(this->filePath.begin(), this->fileContents);
             //ImGui::SetKeyboardFocusHere();
         }
 
